@@ -2,16 +2,18 @@ import * as Yup from "yup";
 
 export const signupSchema = Yup.object().shape({
   username: Yup.string()
+    .trim()
     .min(3, "Too short!")
-    .max(50, "Too long!")
+    .max(20, "Too long!")
     .required("Required"),
   password: Yup.string()
-    .min(4, "Too short!")
-    .max(50, "Too long!")
+    .trim()
+    .min(3, "Too short!")
+    .max(20, "Too long!")
     .required("Required"),
 });
 
 export const loginSchema = Yup.object().shape({
-  username: Yup.string().required("Required"),
-  password: Yup.string().required("Required"),
+  username: Yup.string().trim().required("Required"),
+  password: Yup.string().trim().required("Required"),
 });
