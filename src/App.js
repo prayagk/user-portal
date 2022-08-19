@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import { initializeAdmin } from "./utils/storageHelper";
 import PrivateRoute from "./utils/PrivateRoute";
 import { BASE_URL, URLS } from "./constants";
+import AppContainer from "./components/AppContainer";
 
 const theme = createTheme();
 initializeAdmin();
@@ -17,12 +18,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
-      <div
-        style={{
-          height: "100vh",
-          paddingTop: 20,
-        }}
-      >
+      <AppContainer>
         <Routes>
           <Route path={URLS.login} element={<Login />} />
           <Route path={URLS.signup} element={<Signup />} />
@@ -36,7 +32,7 @@ function App() {
             <Route path={URLS.admin} element={<Admin />} />
           </Route>
         </Routes>
-      </div>
+      </AppContainer>
     </ThemeProvider>
   );
 }
