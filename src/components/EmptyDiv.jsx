@@ -1,13 +1,11 @@
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 
 function EmptyDiv() {
   return (
-    <Container className="center">
-      <Box pt={1}>
-        <h3>Nothing to display.</h3>
-      </Box>
-    </Container>
+    <Box sx={{ display: "flex", justifyContent: "center" }} p={3}>
+      <h3>Nothing to display.</h3>
+    </Box>
   );
 }
 
