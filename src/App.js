@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Navbar from "./components/Navbar";
 import "./App.css";
@@ -8,7 +8,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { initializeAdmin } from "./utils/storageHelper";
 import PrivateRoute from "./utils/PrivateRoute";
-import { URLS } from "./constants";
+import { BASE_URL, URLS } from "./constants";
 
 const theme = createTheme();
 initializeAdmin();
@@ -27,6 +27,11 @@ function App() {
           <Route path={URLS.login} element={<Login />} />
           <Route path={URLS.signup} element={<Signup />} />
           <Route element={<PrivateRoute />}>
+            <Route
+              exact
+              path={BASE_URL}
+              element={<Navigate to={URLS.dashboard} />}
+            />
             <Route path={URLS.dashboard} element={<Dashboard />} />
             <Route path={URLS.admin} element={<Admin />} />
           </Route>
