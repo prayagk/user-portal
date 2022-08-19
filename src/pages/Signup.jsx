@@ -23,7 +23,7 @@ function Signup() {
 
   const onSubmitHandler = ({ username, password }) => {
     // TODO - validate
-    const users = getItem("users") ?? [];
+    const users = getItem("users");
     const id = users.length + 1;
 
     const isExist = users.filter((user) => user.username === username).length;
