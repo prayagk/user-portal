@@ -24,12 +24,12 @@ function App() {
         }}
       >
         <Routes>
+          <Route path={URLS.login} element={<Login />} />
+          <Route path={URLS.signup} element={<Signup />} />
           <Route element={<PrivateRoute />}>
             <Route path={URLS.dashboard} element={<Dashboard />} />
             <Route path={URLS.admin} element={<Admin />} />
           </Route>
-          <Route path={URLS.login} element={<Login />} />
-          <Route path={URLS.signup} element={<Signup />} />
         </Routes>
       </div>
     </ThemeProvider>
