@@ -1,25 +1,36 @@
 import { Box, Button, Grid, Paper, TextField } from "@mui/material";
 import { Container } from "@mui/system";
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { URLS } from "../constants";
 import { getItem, setItem } from "../utils/storageHelper";
+import { useFormik } from "formik";
+import { signupSchema } from "../utils/validationSchema";
 
 function Signup() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: signupSchema,
+    onSubmit: (values) => {
+      onSubmitHandler(values);
+    },
+  });
 
-    const rawUsername = username.trim();
-    const rawPassword = password.trim();
-    
+  const onSubmitHandler = ({ username, password }) => {
     // TODO - validate
     const users = getItem("users") ?? [];
     const id = users.length + 1;
 
+    const isExist = users.filter((user) => user.username === username).length;
+    if (isExist) {
+      alert("Username already taken");
+      return;
+    }
     const user = {
       id,
       username,
@@ -43,31 +54,43 @@ function Signup() {
             }}
             noValidate
             autoComplete="off"
-            onSubmit={onSubmitHandler}
+            onSubmit={formik.handleSubmit}
           >
             <Grid container>
               <Grid item xs={12}>
                 <TextField
-                  onChange={(e) => setUsername(e.target.value)}
-                  value={username}
+                  onChange={formik.handleChange}
+                  value={formik.values.username}
+                  name={"username"}
                   label="Username"
                   variant="outlined"
+                  error={
+                    formik.touched.username && Boolean(formik.errors.username)
+                  }
+                  helperText={formik.touched.username && formik.errors.username}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={formik.handleChange}
                   type={"password"}
-                  value={password}
+                  name={"password"}
+                  value={formik.values.password}
                   label="Password"
                   variant="outlined"
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
                 />
               </Grid>
               <Grid item xs={12}>
-                <Button type="submit">Sign up</Button>
+                <Button type="submit" variant="contained">
+                  Sign up
+                </Button>
               </Grid>
               <Grid item xs={12}>
-                <Link to={"/user-portal/login"}>Already have an account?</Link>
+                <Link to={URLS.login}>Already have an account?</Link>
               </Grid>
             </Grid>
           </Box>

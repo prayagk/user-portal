@@ -8,6 +8,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { initializeAdmin } from "./utils/storageHelper";
 import PrivateRoute from "./utils/PrivateRoute";
+import { URLS } from "./constants";
 
 const theme = createTheme();
 initializeAdmin();
@@ -24,11 +25,11 @@ function App() {
       >
         <Routes>
           <Route element={<PrivateRoute />}>
-            <Route path="/user-portal/dashboard" element={<Dashboard />} />
-            <Route path="/user-portal/admin" element={<Admin />} />
+            <Route path={URLS.dashboard} element={<Dashboard />} />
+            <Route path={URLS.admin} element={<Admin />} />
           </Route>
-          <Route path="/user-portal/login" element={<Login />} />
-          <Route path="/user-portal/signup" element={<Signup />} />
+          <Route path={URLS.login} element={<Login />} />
+          <Route path={URLS.signup} element={<Signup />} />
         </Routes>
       </div>
     </ThemeProvider>
